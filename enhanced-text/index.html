@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>deck.gl Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href='https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.css' rel='stylesheet' />
+  <style>
+    body {margin: 0; font-family: sans-serif; width: 100vw; height: 100vh; overflow: hidden;}
+    #container {
+      position: fixed;
+      height: 100vh;
+      width: 300px;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: flex;
+    }
+
+    #app {
+      position: absolute;
+      left: 360px;
+      width: calc(100% - 360px);
+      height: 100%;
+    }
+
+    #control-panel {
+      font-family: Helvetica, Arial, sans-serif;
+      background: #fff;
+      padding: 20px;
+      z-index: 100;
+      line-height: 1.6;
+      overflow-y: auto;
+    }
+    #control-panel div {
+      padding-left: 10px;
+    }
+    
+    .input {
+      display: flex;
+    }
+    .input label {
+      flex-grow: 1;
+    }
+    .input input {
+      width: 140px;
+      margin: 0 8px;
+    }
+    .input span {
+      width: 40px;
+    }
+  </style>
+  <script type="module" crossorigin src="./assets/index-445fbd49.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<div id="container">
+  <div id="control-panel">
+    <div class="input">
+      <label>fontSize</label>
+      <input id="fontSize" type="range" min="20" max="160" step="1" value="32"></input>
+      <span id="fontSize-value"></span>
+    </div>
+    <h3>emboss</h3>
+    <div class="input">
+      <label>bevelHeight</label>
+      <input id="bevelHeight" type="range" min="-3" max="3" step="0.01" value="0"></input>
+      <span id="bevelHeight-value"></span>
+    </div>
+    <div class="input">
+      <label>showNormal</label>
+      <input id="showNormal" type="checkbox"></input>
+    </div>
+    <h3>lights</h3>
+    <div class="input">
+      <label>ambientLight</label>
+      <input id="ambientLight" type="range" min="0" max="1" step="0.01" value="0.4"></input>
+      <span id="ambientLight-value"></span>
+    </div>
+    <div class="input">
+      <label>cameraLight</label>
+      <input id="cameraLight" type="range" min="0" max="1" step="0.1" value="1"></input>
+      <span id="cameraLight-value"></span>
+    </div>
+    <div class="input">
+      <label>directionalLight</label>
+      <input id="directionalLight" type="range" min="0" max="1" step="0.1" value="1"></input>
+      <span id="directionalLight-value"></span>
+    </div>
+    <div class="input">
+      <label>directionalShade</label>
+      <input id="directionalShade" type="range" min="0" max="1" step="0.1" value="0"></input>
+      <span id="directionalShade-value"></span>
+    </div>
+
+    <h3>material</h3>
+    <div class="input">
+      <label>ambient</label>
+      <input id="ambient" type="range" min="0" max="1" step="0.1" value="1"></input>
+      <span id="ambient-value"></span>
+    </div>
+    <div class="input">
+      <label>diffuse</label>
+      <input id="diffuse" type="range" min="0" max="1" step="0.1" value="0.9"></input>
+      <span id="diffuse-value"></span>
+    </div>
+    <div class="input">
+      <label>shininess</label>
+      <input id="shininess" type="range" min="1" max="1000" step="1" value="150"></input>
+      <span id="shininess-value"></span>
+    </div>
+    <div>
+      <label>specularColor</label>
+      <div class="input">
+        <label>R</label>
+        <input id="specularR" type="range" min="0" max="255" step="1" value="255"></input>
+        <span id="specularR-value"></span>
+      </div>
+      <div class="input">
+        <label>G</label>
+        <input id="specularG" type="range" min="0" max="255" step="1" value="255"></input>
+        <span id="specularG-value"></span>
+      </div>
+      <div class="input">
+        <label>B</label>
+        <input id="specularB" type="range" min="0" max="255" step="1" value="255"></input>
+        <span id="specularB-value"></span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>
