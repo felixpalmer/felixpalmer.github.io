@@ -13,12 +13,122 @@
     #container > * {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
     }
+    #loading-indicator {
+        position: absolute;
+        z-index: 100;
+        margin: 10px;
+        padding: 4px;
+        opacity: 1;
+    }
+    .loading-spinner {
+        transform-origin:center;
+        animation:spinner-frames .75s infinite linear;
+    }
+    @keyframes spinner-frames {
+        100% {
+            transform:rotate(360deg);
+        }
+    }
+
+    .drop {
+        position: absolute;
+        cursor: pointer;
+        display: block;
+        background: white;
+        box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 5px;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px;
+        left: 40px;
+    }
+
+    input[type="checkbox"]  {
+        display: none;
+    }
+
+    input +.drop + div {
+        display: block;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        position: absolute;
+        border-radius: 4px;
+        background: white;
+        top: 40px;
+        margin: 16px 10px;
+        padding: 0 10px;
+        width: 50%;
+        height: 90%;
+        overflow: scroll;
+        box-shadow: rgba(0, 0, 0, 0.5) 1px 1px 5px;
+        pointer-events: none;
+    }
+    .drop:after {
+        content: ' ▼';
+        font-size: 10px;
+    }
+    :checked + .drop:after {
+        content: ' ▲';
+    }
+    input:checked + .drop + div {
+        opacity: 1;
+        pointer-events: auto;
+    }
   </style>
-  <script type="module" crossorigin src="./assets/index-321b2ce7.js"></script>
+  <script type="module" crossorigin src="./assets/index-72f27ec6.js"></script>
 </head>
 <body>
     <div id="container">
         <div id="app"></div>
+    </div>
+    <svg id="loading-indicator" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="white" d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25"/><path fill="white" d="M10.72,19.9a8,8,0,0,1-6.5-9.79A7.77,7.77,0,0,1,10.4,4.16a8,8,0,0,1,9.49,6.52A1.54,1.54,0,0,0,21.38,12h.13a1.37,1.37,0,0,0,1.38-1.54,11,11,0,1,0-12.7,12.39A1.54,1.54,0,0,0,12,21.34h0A1.47,1.47,0,0,0,10.72,19.9Z" class="loading-spinner"/></svg>
+    <input id="info-checkbox" type="checkbox"> 
+    <label class="drop" for="info-checkbox">Info</label>
+
+    <div id="info-text">
+        <h2>Dynamic Tiling: Trajectories</h2>
+        <h3>Query</h3>
+        <p>The current dynamic tiling queries support two modes: Point & Lines (Polygons are similar to Lines). Points clips all points within the tile, while Lines intersects with the tile, keeping any overlapping geometry in its entirety. Neither of these modes work for trajectories as Points would introduce gaps across tile boundaries, and Lines would duplicate a long geometry across many tiles.</p>
+        <p>Instead, for Trajectories the query accepts a database table with one point per row, along with a timestamp. The stages of the query are:</p>
+        <ul>
+            <li>Groups the points by a given interal (e.g. 30 seconds)</li>
+            <li>For each group, add the first point of the <i>next</i> group</li>
+            <li>Aggregate the points & use ST_MakeLine to create line geometry</li>
+        </ul>
+        <p>The result is a set of lines, which represent segments of the trajectory represented in the source table.</p>
+        <h3>Geometry simplification</h3>
+        The Lines dynamic tiling will then tile the lines so that only the segments which fall within a tile are sent in that tile payload. In doing so: 
+        <ul>
+            <li>The line geometry is simplified, so the number of vertices in each segment can change</li>
+            <li>The order of the lines is not guaranteed, i.e. they are no longer sorted by timestamp</li>
+        </ul>
+        <h3>Properties</h3>
+        The source table can contain additional properties columns, which are lost in the above procedure. An example is <i>altitude</i>, which is defined per-vertex. An issue with the geometry simplification is that has no concept of additional properties, and it gives no information on which vertices were dropped. Only the simplified to geometry is returned. In order to pass the <i>altitude</i> (and by extension any numeric property the query does the following:
+        <ul>
+            <li>In a similar fashion to the points, the altitudes are aggregated for each segment into an array of length <i>n</i>, where <i>n</i> is the number of vertices in that line segment</li>
+            <li>The altitude is stored in a Struct, along with the position of the point, and the timestamp</i>
+            <li>The position is converted into a scalar value <i>f (0-1)</i> which represents the distance along the segment at which the point is located</li>
+            <li>This mapping is sent as a JSON Array, along with each segment geometry</li>
+        </ul>
+
+        <p>The way to think of this mapping is a piece-wise definition of a function which maps <i>f</i>, the distance on the line, to the timestamp & altitude at that point. While it only contains quantized values, we can interpolate between these to obtain an output for any value of <i>f</i>.</p>
+        <h3>Client-side processing</h3>
+        The client is now able to reconstruct the <i>altitude</i> along the line as follows:
+        <ul>
+            <li>For each line segment (which have been simplified) it calculates inter-vertex distances (<i>deltas</i>)</li>
+            <li>The (<i>deltas</i>) are noramlized, by dividing by the segment length, yielding <i>f</i> values, but for the simplified geometry</li>
+            <li>The mapping function is then applied to convert the <i>f</i> values to interpolated timestamps and altitudes.</li>
+            <li>The segments are sorted by timestamp, restoring the corrrect order</li>
+            <li>The segments are stitched together (within a tile), to form lines without duplicate vertices</li>
+            <li>The lines now have per-vertex timestamps & altitudes, which are used to calculate the speed per-vertex</li>
+        </ul>
+        <h3>Rendering</h3>
+        The resulting data is drawn using a modified <i>VectorTileLayer</i>, with the actual drawing performed using the <i>PathLayer</i>. Some notes on the rendering:
+        <ul>
+            <li>Drawing is done tile-by-tile, but because each tile is clipped in the shader, duplicated lines from adjacent tiles do not cause overlaps</li>
+            <li>The <i>PathLayer</i> shader is modified to smoothly interpolate the color between vertices, to hide the fact that the line is made up of discrete segments. No geometry smoothing is applied but it could be added in the future</li>
+            <li>The <i>PathLayer</i> shader is modified to draw a thin outline at the edge of the line, to better distinguish between overlapping lines</i>
+            <li>To animate the lines the <i>TripsLayer</i> can be used instead of the <i>PathLayer</i></li>
+        </ul>
     </div>
 </body>
 
