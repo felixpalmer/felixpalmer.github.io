@@ -1,25 +1,24 @@
+// deck.gl
+// SPDX-License-Identifier: MIT
+// Copyright (c) vis.gl contributors
+
 importScripts('./util.js');
 let coordinates;
 let result = [];
-
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
   lines.forEach(function (line) {
     if (!line) {
       return;
     }
-
     if (!coordinates) {
       coordinates = decodePolyline(line, 5);
       return;
     }
-
     const parts = line.split('\t');
-
     if (parts.length < 5) {
       return;
     }
-
     result.push({
       name: parts[0],
       class: parts[1],
@@ -28,7 +27,6 @@ onmessage = function (e) {
       year: decodeNumber(parts[4], 90, 32)
     });
   });
-
   if (e.data.event === 'load') {
     flush();
     postMessage({
@@ -36,7 +34,6 @@ onmessage = function (e) {
     });
   }
 };
-
 function flush() {
   postMessage({
     action: 'add',

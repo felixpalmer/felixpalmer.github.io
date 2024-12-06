@@ -1,16 +1,17 @@
+// deck.gl
+// SPDX-License-Identifier: MIT
+// Copyright (c) vis.gl contributors
+
 importScripts('./util.js');
 const result = [];
-
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
   lines.forEach(function (line) {
     if (!line) {
       return;
     }
-
     const parts = line.split('\x01');
     const hex = parts[0];
-
     for (let i = 1; i < parts.length; i += 3) {
       const lng = decodeNumber(parts[i], 90, 32) / 1e5 - 180;
       const lat = decodeNumber(parts[i + 1], 90, 32) / 1e5;
@@ -23,7 +24,6 @@ onmessage = function (e) {
       });
     }
   });
-
   if (e.data.event === 'load') {
     postMessage({
       action: 'add',

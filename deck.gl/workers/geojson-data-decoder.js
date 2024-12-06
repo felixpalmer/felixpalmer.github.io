@@ -1,15 +1,17 @@
+// deck.gl
+// SPDX-License-Identifier: MIT
+// Copyright (c) vis.gl contributors
+
 importScripts('./util.js');
 let result = [];
 let count = 0;
 let vertexCount = 0;
-
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
   lines.forEach(function (line) {
     if (!line) {
       return;
     }
-
     const parts = line.split('\x01');
     const valuePerParcel = decodeNumber(parts[0], 90, 32);
     const valuePerSqm = decodeNumber(parts[1], 90, 32);
@@ -33,7 +35,6 @@ onmessage = function (e) {
       vertexCount += (coordinates.length - 1) * 2;
     });
   });
-
   if (e.data.event === 'load') {
     flush();
     postMessage({
@@ -41,7 +42,6 @@ onmessage = function (e) {
     });
   }
 };
-
 function flush() {
   postMessage({
     action: 'add',

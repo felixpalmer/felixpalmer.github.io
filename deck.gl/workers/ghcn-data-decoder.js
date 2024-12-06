@@ -1,24 +1,24 @@
+// deck.gl
+// SPDX-License-Identifier: MIT
+// Copyright (c) vis.gl contributors
+
 importScripts('./util.js');
 let result = [];
 const countries = {};
 let vertices = 0;
-
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
   lines.forEach(function (line) {
     if (!line) {
       return;
     }
-
     if (line[2] === ' ') {
       countries[line.slice(0, 2)] = line.slice(3);
       return;
     }
-
     const parts = line.split('\t');
     const startYear = decodeNumber(parts[3], 90, 32);
     const meanTemp = [];
-
     for (let i = 4; i < parts.length; i++) {
       if (parts[i]) {
         const year = startYear + i - 4;
@@ -27,7 +27,6 @@ onmessage = function (e) {
         vertices++;
       }
     }
-
     result.push({
       id: parts[0].slice(0, 11),
       country: countries[parts[0].slice(0, 2)],
@@ -37,7 +36,6 @@ onmessage = function (e) {
       meanTemp
     });
   });
-
   if (e.data.event === 'load') {
     flush();
     postMessage({
@@ -45,7 +43,6 @@ onmessage = function (e) {
     });
   }
 };
-
 function flush() {
   postMessage({
     action: 'add',
@@ -57,7 +54,6 @@ function flush() {
   });
   result = [];
 }
-
 function usePrecision(x, precision) {
   const m = Math.pow(10, precision);
   return Math.round(x * m) / m;

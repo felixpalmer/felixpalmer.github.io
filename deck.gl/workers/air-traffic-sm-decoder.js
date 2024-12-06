@@ -1,15 +1,16 @@
+// deck.gl
+// SPDX-License-Identifier: MIT
+// Copyright (c) vis.gl contributors
+
 importScripts('./util.js');
 const flights = [];
-
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
   let time = 0;
-
   for (const line of lines) {
     if (!line) {
       continue;
     }
-
     let i = 0;
     time += decodeNumber(line.slice(i, i += 1), 90, 32);
     const time2 = decodeNumber(line.slice(i, i += 3), 90, 32);
@@ -26,7 +27,6 @@ onmessage = function (e) {
       lat2
     });
   }
-
   if (e.data.event === 'load') {
     postMessage({
       action: 'add',

@@ -1,14 +1,16 @@
+// deck.gl
+// SPDX-License-Identifier: MIT
+// Copyright (c) vis.gl contributors
+
 importScripts('./util.js');
 const result = [];
 let flowCount = 0;
-
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
   lines.forEach(function (line) {
     if (!line) {
       return;
     }
-
     const parts = line.split('\x01');
     const f = {
       type: 'Feature',
@@ -35,11 +37,9 @@ onmessage = function (e) {
     });
     f.properties.centroid = [sumX / len, sumY / len, 0];
   });
-
   if (e.data.event === 'load') {
     result.forEach(function (f, i) {
       const flows = f.properties.flows;
-
       for (const toId in flows) {
         result[toId].properties.flows[i] = -flows[toId];
         flowCount++;
@@ -58,16 +58,13 @@ onmessage = function (e) {
     });
   }
 };
-
 function decodeLinks(str) {
   const links = {};
   const tokens = str.split(/([\x28-\x5b]+)/);
-
   for (let i = 0; i < tokens.length - 1; i += 2) {
     const index = decodeNumber(tokens[i], 32, 93);
     const flow = decodeNumber(tokens[i + 1], 52, 40);
     links[index] = flow;
   }
-
   return links;
 }
