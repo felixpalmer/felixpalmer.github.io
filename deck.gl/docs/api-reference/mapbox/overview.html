@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.6.3">
 <title data-rh="true">@deck.gl/mapbox | deck.gl</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://deck.gl/deck.gl/docs/api-reference/mapbox/overview"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="@deck.gl/mapbox | deck.gl"><meta data-rh="true" name="description" content="This module integrates deck.gl into the Mapbox GL JS API-compatible ecosystem."><meta data-rh="true" property="og:description" content="This module integrates deck.gl into the Mapbox GL JS API-compatible ecosystem."><link data-rh="true" rel="icon" href="/deck.gl/favicon.ico"><link data-rh="true" rel="canonical" href="https://deck.gl/deck.gl/docs/api-reference/mapbox/overview"><link data-rh="true" rel="alternate" href="https://deck.gl/deck.gl/docs/api-reference/mapbox/overview" hreflang="en"><link data-rh="true" rel="alternate" href="https://deck.gl/deck.gl/docs/api-reference/mapbox/overview" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://8EVYAVB4KT-dsn.algolia.net" crossorigin="anonymous"><link rel="stylesheet" href="/deck.gl/assets/css/styles.82ee008b.css">
-<script src="/deck.gl/assets/js/runtime~main.40f850c4.js" defer="defer"></script>
+<script src="/deck.gl/assets/js/runtime~main.41d94996.js" defer="defer"></script>
 <script src="/deck.gl/assets/js/main.ece484a8.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -18,9 +18,6 @@
 <p>This module may be used in the React, Pure JS, and Scripting Environments. Visit the <a href="/deck.gl/docs/developer-guide/base-maps/using-with-mapbox">mapbox base map developer guide</a> for examples of each option.</p>
 <p>When you use this module, Mapbox is the root HTML element and deck.gl is the child, with Mapbox handling all user inputs. Some of deck.gl&#x27;s features are therefore unavailable due to limitations of mapbox-gl&#x27;s API, see <a href="#limitations">limitations</a>.</p>
 <p>It may be easier to understand the concepts of the module if you are already a mapbox-gl developer.</p>
-<blockquote>
-<p>This module is compatible with Mapbox GL JS forks. Known exceptions will be clearly marked. For more, see <a href="/deck.gl/docs/developer-guide/base-maps/using-with-mapbox#compatibility-with-mapbox-gl-js-forks">Compatibility with Mapbox GL JS forks</a></p>
-</blockquote>
 <img src="https://raw.github.com/visgl/deck.gl-data/master/images/whats-new/mapbox-layers.jpg">
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="installation">Installation<a href="#installation" class="hash-link" aria-label="Direct link to Installation" title="Direct link to Installation">​</a></h2>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="include-the-standalone-bundle">Include the Standalone Bundle<a href="#include-the-standalone-bundle" class="hash-link" aria-label="Direct link to Include the Standalone Bundle" title="Direct link to Include the Standalone Bundle">​</a></h3>
@@ -44,7 +41,7 @@
 <p>*will fallback to WebGL1 if WebGL2 is not available</p>
 </blockquote>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="alternative-mapbox-integrations">Alternative Mapbox Integrations<a href="#alternative-mapbox-integrations" class="hash-link" aria-label="Direct link to Alternative Mapbox Integrations" title="Direct link to Alternative Mapbox Integrations">​</a></h2>
-<p>If you&#x27;re using deck.gl in a React or Scripting environment, you just want the base map as a back drop, and do not need mapbox-gl&#x27;s UI controls or need to mix deck.gl and Mapbox layers, it is recommended that you do not use this module and instead use deck.gl as the root HTML element. Visit <a href="/deck.gl/docs/developer-guide/base-maps/using-with-mapbox#using-deckgl-as-the-root-html-element">Using Deck.gl as the root HTML element</a> for an example.</p>
+<p>If you&#x27;re using deck.gl in a React or Scripting environment, you just want the base map as a back drop, and do not need mapbox-gl&#x27;s UI controls or need to mix deck.gl and Mapbox layers, it is recommended that you do not use this module and instead use deck.gl as the root HTML element. Visit <a href="/deck.gl/docs/developer-guide/base-maps/using-with-mapbox#reverse-controlled">Using Deck.gl as the root HTML element</a> for an example.</p>
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="limitations">Limitations<a href="#limitations" class="hash-link" aria-label="Direct link to Limitations" title="Direct link to Limitations">​</a></h2>
 <ul>
 <li>When using deck.gl&#x27;s multi-view system, only one of the views can match the base map and receive interaction. See <a href="/deck.gl/docs/api-reference/mapbox/mapbox-overlay#multi-view-usage">using MapboxOverlay with multi-views</a> for details.</li>

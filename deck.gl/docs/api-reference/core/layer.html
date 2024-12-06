@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.6.3">
 <title data-rh="true">Layer Class | deck.gl</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://deck.gl/deck.gl/docs/api-reference/core/layer"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Layer Class | deck.gl"><meta data-rh="true" name="description" content="The Layer class is the base class of all deck.gl layers, and it provides a number of base properties available in all layers."><meta data-rh="true" property="og:description" content="The Layer class is the base class of all deck.gl layers, and it provides a number of base properties available in all layers."><link data-rh="true" rel="icon" href="/deck.gl/favicon.ico"><link data-rh="true" rel="canonical" href="https://deck.gl/deck.gl/docs/api-reference/core/layer"><link data-rh="true" rel="alternate" href="https://deck.gl/deck.gl/docs/api-reference/core/layer" hreflang="en"><link data-rh="true" rel="alternate" href="https://deck.gl/deck.gl/docs/api-reference/core/layer" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://8EVYAVB4KT-dsn.algolia.net" crossorigin="anonymous"><link rel="stylesheet" href="/deck.gl/assets/css/styles.82ee008b.css">
-<script src="/deck.gl/assets/js/runtime~main.40f850c4.js" defer="defer"></script>
+<script src="/deck.gl/assets/js/runtime~main.41d94996.js" defer="defer"></script>
 <script src="/deck.gl/assets/js/main.ece484a8.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
@@ -105,7 +105,7 @@
 <ul>
 <li><code>error</code> - a JavaScript <code>Error</code> object.</li>
 </ul>
-<p>If this callback is supplied and returns <code>true</code>, the error is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/react/deckgl#onerror"><code>onError</code></a> callback of the <code>Deck</code> instance.</p>
+<p>If this callback is supplied and returns <code>true</code>, the error is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/core/deck#onerror"><code>onError</code></a> callback of the <code>Deck</code> instance.</p>
 <h3 class="anchor anchorWithStickyNavbar_LWe7" id="interaction-properties">Interaction Properties<a href="#interaction-properties" class="hash-link" aria-label="Direct link to Interaction Properties" title="Direct link to Interaction Properties">​</a></h3>
 <p>Layers can be interacted with using these properties.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="pickable"><code>pickable</code> (boolean, optional)<a href="#pickable" class="hash-link" aria-label="Direct link to pickable" title="Direct link to pickable">​</a></h4>
@@ -119,7 +119,7 @@
 <li><a href="/deck.gl/docs/developer-guide/interactivity#the-pickinginfo-object"><code>info</code></a></li>
 <li><code>event</code> - the source event</li>
 </ul>
-<p>If this callback returns a truthy value, the <code>hover</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/react/deckgl#onhover"><code>onHover</code></a> callback of the <code>DeckGL</code> canvas.</p>
+<p>If this callback returns a truthy value, the <code>hover</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/core/deck#onhover"><code>onHover</code></a> callback of the <code>DeckGL</code> canvas.</p>
 <p>Requires <code>pickable</code> to be true.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="onclick"><code>onClick</code> (Function, optional)<a href="#onclick" class="hash-link" aria-label="Direct link to onclick" title="Direct link to onclick">​</a></h4>
 <p>This callback will be called when the mouse clicks over an object of this deck.gl layer with the following parameters:</p>
@@ -127,7 +127,7 @@
 <li><a href="/deck.gl/docs/developer-guide/interactivity#the-pickinginfo-object"><code>info</code></a></li>
 <li><code>event</code> - the source event</li>
 </ul>
-<p>If this callback returns a truthy value, the <code>click</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/react/deckgl#onclick"><code>onClick</code></a> callback of the <code>DeckGL</code> canvas.</p>
+<p>If this callback returns a truthy value, the <code>click</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/core/deck#onclick"><code>onClick</code></a> callback of the <code>DeckGL</code> canvas.</p>
 <p>Requires <code>pickable</code> to be true.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="ondragstart"><code>onDragStart</code> (Function, optional)<a href="#ondragstart" class="hash-link" aria-label="Direct link to ondragstart" title="Direct link to ondragstart">​</a></h4>
 <p>This callback will be called when the mouse starts dragging an object of this deck.gl layer with the following parameters:</p>
@@ -135,7 +135,7 @@
 <li><a href="/deck.gl/docs/developer-guide/interactivity#the-pickinginfo-object"><code>info</code></a></li>
 <li><code>event</code> - the source event</li>
 </ul>
-<p>If this callback returns a truthy value, the <code>dragstart</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/react/deckgl#ondragstart"><code>onDragStart</code></a> callback of the <code>DeckGL</code> canvas.</p>
+<p>If this callback returns a truthy value, the <code>dragstart</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/core/deck#ondragstart"><code>onDragStart</code></a> callback of the <code>DeckGL</code> canvas.</p>
 <p>Requires <code>pickable</code> to be true.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="ondrag"><code>onDrag</code> (Function, optional)<a href="#ondrag" class="hash-link" aria-label="Direct link to ondrag" title="Direct link to ondrag">​</a></h4>
 <p>This callback will be called when the mouse drags an object of this deck.gl layer with the following parameters:</p>
@@ -143,7 +143,7 @@
 <li><a href="/deck.gl/docs/developer-guide/interactivity#the-pickinginfo-object"><code>info</code></a></li>
 <li><code>event</code> - the source event</li>
 </ul>
-<p>If this callback returns a truthy value, the <code>drag</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/react/deckgl#ondrag"><code>onDrag</code></a> callback of the <code>DeckGL</code> canvas.</p>
+<p>If this callback returns a truthy value, the <code>drag</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/core/deck#ondrag"><code>onDrag</code></a> callback of the <code>DeckGL</code> canvas.</p>
 <p>Requires <code>pickable</code> to be true.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="ondragend"><code>onDragEnd</code> (Function, optional)<a href="#ondragend" class="hash-link" aria-label="Direct link to ondragend" title="Direct link to ondragend">​</a></h4>
 <p>This callback will be called when the mouse releases an object of this deck.gl layer with the following parameters:</p>
@@ -151,7 +151,7 @@
 <li><a href="/deck.gl/docs/developer-guide/interactivity#the-pickinginfo-object"><code>info</code></a></li>
 <li><code>event</code> - the source event</li>
 </ul>
-<p>If this callback returns a truthy value, the <code>dragend</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/react/deckgl#ondragend"><code>onDragEnd</code></a> callback of the <code>DeckGL</code> canvas.</p>
+<p>If this callback returns a truthy value, the <code>dragend</code> event is marked as handled and will not bubble up to the <a href="/deck.gl/docs/api-reference/core/deck#ondragend"><code>onDragEnd</code></a> callback of the <code>DeckGL</code> canvas.</p>
 <p>Requires <code>pickable</code> to be true.</p>
 <h4 class="anchor anchorWithStickyNavbar_LWe7" id="highlightcolor"><code>highlightColor</code> (Color | Function, optional)<a href="#highlightcolor" class="hash-link" aria-label="Direct link to highlightcolor" title="Direct link to highlightcolor">​</a></h4>
 <ul>
