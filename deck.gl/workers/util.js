@@ -10,10 +10,11 @@ function decodeNumberArr(str, b, shift, length) {
   }
   return result;
 }
+
 function decodeNumber(str, b, shift) {
   let x = 0;
   let p = 1;
-  for (let i = str.length; i--;) {
+  for (let i = str.length; i--; ) {
     x += (str.charCodeAt(i) - shift) * p;
     p *= b;
   }
@@ -53,22 +54,30 @@ function decodePolyline(str, precision) {
     byte = null;
     shift = 0;
     result = 0;
+
     do {
       byte = str.charCodeAt(index++) - 63;
       result |= (byte & 0x1f) << shift;
       shift += 5;
     } while (byte >= 0x20);
+
     latitude_change = result & 1 ? ~(result >> 1) : result >> 1;
+
     shift = result = 0;
+
     do {
       byte = str.charCodeAt(index++) - 63;
       result |= (byte & 0x1f) << shift;
       shift += 5;
     } while (byte >= 0x20);
+
     longitude_change = result & 1 ? ~(result >> 1) : result >> 1;
+
     lat += latitude_change;
     lng += longitude_change;
+
     coordinates.push([lng / factor, lat / factor]);
   }
+
   return coordinates;
 }

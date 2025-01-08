@@ -3,10 +3,13 @@
 // Copyright (c) vis.gl contributors
 
 importScripts('./util.js');
+
 const result = [];
 let flowCount = 0;
+
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
+
   lines.forEach(function (line) {
     if (!line) {
       return;
@@ -22,10 +25,13 @@ onmessage = function (e) {
         type: 'MultiPolygon'
       }
     };
+
     result.push(f);
+
     let sumX = 0;
     let sumY = 0;
     let len = 0;
+
     f.geometry.coordinates = parts.slice(2).map(function (str) {
       const coords = decodePolyline(str);
       coords.forEach(function (c) {
@@ -35,8 +41,10 @@ onmessage = function (e) {
       });
       return [coords];
     });
+
     f.properties.centroid = [sumX / len, sumY / len, 0];
   });
+
   if (e.data.event === 'load') {
     result.forEach(function (f, i) {
       const flows = f.properties.flows;
@@ -45,6 +53,7 @@ onmessage = function (e) {
         flowCount++;
       }
     });
+
     postMessage({
       action: 'add',
       data: result,
@@ -53,11 +62,10 @@ onmessage = function (e) {
         flowCount
       }
     });
-    postMessage({
-      action: 'end'
-    });
+    postMessage({action: 'end'});
   }
 };
+
 function decodeLinks(str) {
   const links = {};
   const tokens = str.split(/([\x28-\x5b]+)/);

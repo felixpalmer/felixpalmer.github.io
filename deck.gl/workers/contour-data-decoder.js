@@ -3,9 +3,12 @@
 // Copyright (c) vis.gl contributors
 
 importScripts('./util.js');
+
 const result = [];
+
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
+
   lines.forEach(function (line) {
     if (!line) {
       return;
@@ -21,8 +24,10 @@ onmessage = function (e) {
     for (let i = 4, week = firstWeek; i < parts.length; i++, week++) {
       d.casesByWeek[week] = decodeNumber(parts[i], 90, 32);
     }
+
     result.push(d);
   });
+
   if (e.data.event === 'load') {
     postMessage({
       action: 'add',
@@ -31,8 +36,6 @@ onmessage = function (e) {
         count: result.length
       }
     });
-    postMessage({
-      action: 'end'
-    });
+    postMessage({action: 'end'});
   }
 };

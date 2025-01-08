@@ -6,16 +6,20 @@ importScripts('./util.js');
 let result = [];
 const countries = {};
 let vertices = 0;
+
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
+
   lines.forEach(function (line) {
     if (!line) {
       return;
     }
+
     if (line[2] === ' ') {
       countries[line.slice(0, 2)] = line.slice(3);
       return;
     }
+
     const parts = line.split('\t');
     const startYear = decodeNumber(parts[3], 90, 32);
     const meanTemp = [];
@@ -27,6 +31,7 @@ onmessage = function (e) {
         vertices++;
       }
     }
+
     result.push({
       id: parts[0].slice(0, 11),
       country: countries[parts[0].slice(0, 2)],
@@ -36,24 +41,22 @@ onmessage = function (e) {
       meanTemp
     });
   });
+
   if (e.data.event === 'load') {
     flush();
-    postMessage({
-      action: 'end'
-    });
+    postMessage({action: 'end'});
   }
 };
+
 function flush() {
   postMessage({
     action: 'add',
     data: result,
-    meta: {
-      stations: result.length,
-      vertices
-    }
+    meta: {stations: result.length, vertices}
   });
   result = [];
 }
+
 function usePrecision(x, precision) {
   const m = Math.pow(10, precision);
   return Math.round(x * m) / m;

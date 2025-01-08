@@ -3,11 +3,14 @@
 // Copyright (c) vis.gl contributors
 
 importScripts('./util.js');
+
 let result = [];
 let count = 0;
 let blob = '';
 let timestamp = 0;
+
 const pattern = /^(.)(.+)\x01(.{4})(.{4})(.+)$/;
+
 onmessage = function (e) {
   const lines = (blob + e.data.text).split('\n');
   blob = lines.pop();
@@ -20,7 +23,9 @@ onmessage = function (e) {
     let parts = line.match(pattern);
     parts.shift();
     parts = parts.map(x => decodeNumber(x, 90, 32));
+
     timestamp += parts[1];
+
     result.push({
       timestamp,
       latitude: (parts[2] - 9e5) / 1e4,
@@ -30,20 +35,18 @@ onmessage = function (e) {
     });
     count++;
   });
+
   if (e.data.event === 'load') {
     flush();
-    postMessage({
-      action: 'end'
-    });
+    postMessage({action: 'end'});
   }
 };
+
 function flush() {
   postMessage({
     action: 'add',
     data: result,
-    meta: {
-      count: count
-    }
+    meta: {count: count}
   });
   result = [];
 }

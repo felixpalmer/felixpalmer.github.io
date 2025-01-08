@@ -7,8 +7,10 @@ const FLUSH_LIMIT = 20000;
 let result = [];
 let count = 0;
 let triangleCount = 0;
+
 onmessage = function (e) {
   const lines = e.data.text.split('\n');
+
   lines.forEach(function (line) {
     if (!line) {
       return;
@@ -26,27 +28,25 @@ onmessage = function (e) {
         polygon: coords
       });
     });
+
     count++;
+
     if (result.length >= FLUSH_LIMIT) {
       flush();
     }
   });
+
   if (e.data.event === 'load') {
     flush();
-    postMessage({
-      action: 'end'
-    });
+    postMessage({action: 'end'});
   }
 };
+
 function flush() {
   postMessage({
     action: 'add',
     data: result,
-    meta: {
-      buildings: count,
-      triangles: triangleCount,
-      progressAlt: count / 3895 * 0.2
-    }
+    meta: {buildings: count, triangles: triangleCount, progressAlt: (count / 3895) * 0.2}
   });
   result = [];
 }
